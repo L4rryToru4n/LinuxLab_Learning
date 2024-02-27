@@ -1,0 +1,14 @@
+flask
+flask-cors
+flask-mailman
+gunicorn
+python-dotenv
+flask-wtf
+flask-sqlalchemy
+flask-security-too
+email_validator
+passlib
+wtforms
+SQLAlchemy
+mysqlclient
+python-dateutil
