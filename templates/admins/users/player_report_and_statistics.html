@@ -1,0 +1,116 @@
+{% from "macros/fields.html" import render_text_field %}
+
+{% extends "admins/layout.html" %}
+
+{% block title %}
+<title>Player Report and Statistics | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/report_and_statistics.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="report_and_statistics_content">
+  <h1 class="page__title">{{ player_username }}</h1>
+  <section class="report">
+    <div class="report__periodic">
+      <h2 class="report__subtitle">Periodic Report</h2>
+      {% if form.period %}
+      <form name="report_player" class="form" method="POST" novalidate>
+        <div class="form__content">
+          {{ form.hidden_tag() }}
+
+          {{ render_text_field(form.period) }}
+          <div class="button__apply-period">
+            {{ form.submit(class_="button button--form") }}
+          </div>
+        </div>
+      </form>
+      {% else %}
+      <div class="form__content">
+        No records yet.
+      </div>
+      {% endif %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+      {% endfor %}
+      {% endwith %}
+
+      <article class="report__content">
+        <label class="label__content">Total Score             : {{ total_score }}</label>
+        <label class="label__content">Total Quiz Score        : {{ total_quiz_score }}</label>
+        <label class="label__content">Average Completion Time : {{ avg_completion_time }}</label>
+      </article>
+    </div>
+  </section>
+
+  <section class="achievement">
+    <h2 class="achievement__subtitle">Achievements</h2>
+    <div class="achievement__collection">
+      {% if achievements %}
+        {% for achievement in achievements %}
+        <article class="achievement__card">
+          <header class="card__header">
+            <h3 class="card__name">{{ achievement.achievement_name }}</h3>
+            <p class="card__description">{{ achievement.description }}</p>
+          </header>
+        </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="quiz__report">
+    <div class="quiz_report__content">
+      <h2 class="quiz__report__subtitle">Quiz Report</h2>
+      {% if quizzes_points %}
+      <table class="table_quizzes">
+        <thead class="table__head_quizzes">
+          <tr class="table__head_quizzes table__head--row_quizzes">
+            <th class=" table__cell_quizzes table__cell--header_quizzes">Quizzes</th>
+            <th class="table__cell_quizzes table__cell--header_quizzes">Points</th>
+          </tr>
+        </thead>
+        <tbody class="table__body_quizzes">
+          {% for quiz in quizzes_points %}
+          <tr class="table__body_quizzes table__body--row_quizzes">
+            <td class="table__cell_quizzes table__cell--data_quizzes">{{ quiz.quiz}}</td>
+            <td class="table__cell_quizzes table__cell--data_quizzes">{{ quiz.total_points }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No records yet.</p>
+      {% endif %}
+      {% for quiz in quizzes_solved %}
+      <label class="component_label__content">{{ quiz.quiz }}</label>
+      {% if quiz.questions %}
+      <table class="table">
+        <thead class="table__head">
+          <tr class="table__head table__head--row"">
+                <th class=" table__cell table__cell--header">Questions</th>
+            <th class="table__cell table__cell--header">Answered Correct ?</th>
+            <th class="table__cell table__cell--header">Correct Answer</th>
+          </tr>
+        </thead>
+        <tbody class="table__body">
+          {% for question in quiz.questions %}
+          <tr class="table__body table__body--row">
+            <td class="table__cell table__cell--data">{{ question.question }}</td>
+            <td class="table__cell table__cell--data">{{ question.answered_correct }}</td>
+            <td class="table__cell table__cell--data">{{ question.correct_answer }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No records yet.</p>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock main_content %}

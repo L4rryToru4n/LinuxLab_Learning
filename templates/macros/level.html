@@ -1,0 +1,34 @@
+{% macro levels_list() %}
+{% set quiz_list = namespace(value=0) %}
+<div class="menu">
+  <ul class="menu__list">
+    <li class="menu__item"><a href="/levels/entry/" class="menu__link">Level Entry</a></li>
+    {% for level_list in range (0, 20) %}
+    <li class="menu__item"><a href="{{ url_for('player.levels', level_number=level_list) }}" 
+      class="menu__link {{ 'menu__link--active' if request.path == url_for('player.levels', level_number=level_list) }}">Level {{ level_list }} &rarr; Level {{
+        level_list+1 }}</a></li>
+        {% if level_list > 1 and level_list % 4 == 0 %}
+          {% set quiz_list.value = quiz_list.value + 1 %}
+          <li class="menu__item"><a href="{{ url_for('player.quizzes', quiz_number=quiz_list.value) }}" 
+            class="menu__link {{ 'menu__link--active' if request.path == url_for('player.quizzes', quiz_number=quiz_list.value) }}">
+            Quiz {{ quiz_list.value }}
+          </a></li>
+        {% endif %}
+
+        {% if level_list == 19 %}
+        {% set quiz_list.value = quiz_list.value + 1 %}
+        <li class="menu__item"><a href="{{ url_for('player.quizzes', quiz_number=quiz_list.value) }}" 
+          class="menu__link {{ 'menu__link--active' if request.path == url_for('player.quizzes', quiz_number=quiz_list.value) }}">
+            Quiz {{ quiz_list.value }}
+          </a></li>
+        {% endif %}
+
+    {% endfor %}
+  </ul>
+</div>
+{% endmacro %}
+
+{% macro level_port() %}
+  <p class="content__title"><em>Port</em></p>
+  <p class="content__subtitle">level0@linuxlab:22</p>
+{% endmacro %}

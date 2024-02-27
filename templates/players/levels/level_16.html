@@ -1,0 +1,106 @@
+{% from "macros/fields.html" import render_flag_field %}
+{% from "macros/level.html" import levels_list %}
+
+{% extends "players/layout.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/levels.css') }}" />
+{% endblock head_content %}
+
+{% block title %}
+<title>Level 16 &rarr; Level 17 | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+{{ levels_list() }}
+<section class="menu__content">
+  <article class="level">
+    <h1 class="level__title">Level 16 &rarr; Level 17</h1>
+    {% if level != None %}
+      <div class="level__content">
+        <p class="content__subtitle">
+          {{ level.story }}
+        </p>
+      </div>
+      <div class="level__content">
+        <p class="content__title">
+          <em>Task</em>
+        </p>
+        <p class="content__subtitle">
+          {% for word in level.task.split("\\") %}
+          {% if word[0] == "*" and word[-1] =="*" %}
+          <strong>{{ word[1:-1].strip() }}</strong>
+          {% else %}
+          {{ word.strip() }}
+          {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+      <div class="level__content">
+        <p class="content__title">
+          <em>Commands may needed to solve</em>
+        </p>
+        <p class="content__subtitle">{{ level.commands_needed }}</p>
+      </div>
+      <div class="level__content">
+        <p class="content__title">
+          <em>Helpful references for playing</em>
+        </p>
+        <p class="content__subtitle">
+        <ul class="reference__list">
+          {% for reference in level.helpful_references %}
+          <li class="list__link">
+            {# Get the reference link #}
+            <a class="reference__link" href="{{ reference.split(',')[0] }}">
+              {# Get the reference title #}
+              {{ reference.split(",")[1] }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        </p>
+      </div>
+      <div class="level__content">
+        <p class="content__title">
+          <em>Hint</em>
+        </p>
+        <details>
+          <summary>Show hint</summary>
+          <p class="content__subtitle">
+            {{ level.hint }}
+          </p>
+        </details>
+      </div>
+      <div class="level__content">
+        <p class="content__title">
+          <em>Access Port</em>
+        </p>
+        <p class="content__subtitle">
+          {{ level.access_port }}
+        </p>
+      </div>
+      <form name="levels_16" class="form" method="POST" novalidate>
+        <div class="form__content">
+          {{ form.hidden_tag() }}
+
+          {{ render_flag_field(form.flag) }}
+          <div class="button__flag-submit">
+            {{form.submit(class_="button button--form") }}
+          </div>
+        </div>
+      </form>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+      {% endfor %}
+      {% endwith %}
+    {% else %}
+    <div class="level__content">
+      <p class="content__subtitle">
+        Content on this level is in development. Please wait for further information.
+      </p>
+    </div>
+    {% endif %}
+  </article>
+</section>
+{% endblock main_content %}

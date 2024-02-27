@@ -1,0 +1,93 @@
+{% from "macros/svgs.html" import pencil, trash, check_circle, x_circle, plus_circle %}
+{% extends "admins/layout.html" %}
+
+{% block title %}
+<title>User Management | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="management__content">
+  <h2 class="table__title--players">Players</h2>
+  <a href="{{ url_for('admin.player_create') }}" class="action__link--single">{{ plus_circle("plus_circle") }} Create
+    New</a>
+  {% if players_data %}
+  <table class="table">
+    <thead class="table__head">
+      <tr class="table__head table__head--row">
+        <th class="table__cell table__cell--header">Username</th>
+        <th class="table__cell table__cell--header">Email</th>
+        <th class="table__cell table__cell--header">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      {% for player in players_data %}
+      <tr class="table__body table__body--row">
+        <td class="table__cell table__cell--data">
+          <a href="{{ url_for('admin.player_report_and_statistics', id_player=player.id_player) }}" 
+          class="report_and_statistics__link">
+          {{ player.username }}</a>
+        </td>
+        <td class="table__cell table__cell--data">{{ player.email }}</td>
+        <td class="table__cell table__cell--data">
+          <a href="{{ url_for('admin.player_edit', id_player=player.id_player) }}" class="action__link">Edit {{ pencil("pencil")
+            }}</a>
+          <a href="{{ url_for('admin.player_delete', id_player=player.id_player) }}" class="action__link">Delete {{
+            trash("trash") }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == 'player_msg_success' or category == 'player_msg_error' %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+    {% endif %}
+  {% endfor %}
+  {% endwith %}
+  {% else %}
+  <p class="table__no_data">No players yet.</p>
+  {% endif %}
+  <h2 class="table__title--admins">Administrators</h2>
+  <a href="{{ url_for('admin.administrator_create') }}" class="action__link--single">{{ plus_circle("plus_circle") }} Create
+    New</a>
+  {% if admins_data %}
+  <table class="table">
+    <thead class="table__head">
+      <tr class="table__head table__head--row"">
+        <th class="table__cell table__cell--header">Username</th>
+        <th class="table__cell table__cell--header">Email</th>
+        <th class="table__cell table__cell--header">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      {% for admin in admins_data %}
+      <tr class="table__body table__body--row">
+        <td class="table__cell table__cell--data">{{ admin.username }}</td>
+        <td class="table__cell table__cell--data">{{ admin.email }}</td>
+        <td class="table__cell table__cell--data">
+          <a href="{{ url_for('admin.administrator_edit', id_admin=admin.id_admin) }}" class="action__link">Edit {{ pencil("pencil")
+            }}</a>
+          <a href="{{ url_for('admin.administrator_delete', id_admin=admin.id_admin) }}" class="action__link">Delete {{
+            trash("trash") }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == "admin_msg_success" or category == "admin_msg_error" %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+    {% endif %}
+  {% endfor %}
+  {% endwith %}
+  {% else %}
+  <p class="table__no_data">No admins yet.</p>
+  {% endif %}
+</div>
+{% endblock main_content %}

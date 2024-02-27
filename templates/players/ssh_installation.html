@@ -1,0 +1,123 @@
+{% extends "players/layout.html" %}
+
+{% block title %}
+<title>Help | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+<section class="support">
+  <article class="help">
+    <h1 class="help__title" id="windows_installation">SSH Installation on Windows 10</h1>
+    <p class="help__content">
+      If you prefer GUI tools, head to the 
+      <a href="{{ url_for('player.ssh_installation', _anchor='windows_installing_putty') }}" 
+      class="index__link">
+        Installing PuTTY
+      </a> section. Otherwise, head to the 
+      <a href="{{ url_for('player.ssh_installation', _anchor='windows_installing_openssh') }}" 
+      class="index__link">
+        Installing OpenSSH
+      </a> section.
+    </p>
+    <h2 class="help__subtitle" id="windows_installing_putty">Installing PuTTY</h2>
+    <p class="help__content">
+      Head to the PuTTY installation web page
+      <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" class="index__link">here</a> 
+      to download the program. Choose the package files with 32-bit x86 architecture and .msi extension. Or
+      download the msi package directly 
+      <a href="{{ url_for('player.putty_download') }}" class="index__link">here</a>
+    </p>
+    <p class="help__content">
+      After the download is completed, double click the program with ".msi" extension to run the 
+      installation
+    </p>
+    <p class="help__content">
+      A welcome window should be shown. Click "Next" to proceed to the next step
+      <img src="{{ url_for('static', filename='assets/putty_installation/welcome_window.png') }}" 
+      alt="welcome_window" class="image__content">
+    </p>
+    <p class="help__content">
+      On "Destination Folder", you can change the installation destination as you wish then click "Next". 
+      If you want to keep the default, Click "Next" again to proceed to the next step
+      <img src="{{ url_for('static', filename='assets/putty_installation/destination_folder.png') }}" 
+      alt="destination_folder" class="image__content">
+    </p>
+    <p class="help__content">
+      On "Product Features", you can select to add shortcut features or not. Then click "Install".
+      <img src="{{ url_for('static', filename='assets/putty_installation/to_install.png') }}" 
+      alt="to_install" class="image__content">
+    </p>
+    <p class="help__content">
+      Wait for installation to finish. If the installation is successfull then click "Finish" to finish 
+      the installation.
+      <img src="{{ url_for('static', filename='assets/putty_installation/installation_finished.png') }}" 
+      alt="installation_finished" class="image__content">
+    </p>
+    <h2 class="help__subtitle" id="windows_installing_openssh">Installing OpenSSH</h2>
+    <p class="help__content">
+      To install OpenSSH, open <strong>Settings</strong> window then head to 
+      <strong>System > Optional Features</strong>. Then click "Add a feature"
+      <img src="{{ url_for('static', filename='assets/openssh_windows_installation/optional_features.png') }}"
+       alt="installation_finished" class="image__content">
+    </p>
+    <p class="help__content">
+      Next, type "OpenSSH Client" then check the checkbox feature and click "Install (1)" 
+      <img src="{{ url_for('static', filename='assets/openssh_windows_installation/add_an_optional_feature.png') }}"
+        alt="installation_finished" class="image__content">
+    </p>
+    <p class="help__content">
+      Wait for the installation to finished. If successfull, the "Latest actions" section should display 
+      the feature as installed.
+      <img src="{{ url_for('static', filename='assets/openssh_windows_installation/openssh_installed.png') }}"
+        alt="installation_finished" class="image__content">
+    </p>
+  </article>
+  <article class="help">
+    <h1 class="help__title" id="linux_installation">SSH Installation on Linux</h1>
+    <p class="help__content">
+      If you have Debian based distro, head to the
+      <a href="{{ url_for('player.ssh_installation', _anchor='debian_installing_openssh') }}" class="index__link">
+        Installing OpenSSH on Debian based
+      </a> section. 
+      For CentOS, head to the
+      <a href="{{ url_for('player.ssh_installation', _anchor='centos_installing_openssh') }}" class="index__link">
+        Installing OpenSSH on CentOS
+      </a> section.
+      And for Arch based, head to the
+      <a href="{{ url_for('player.ssh_installation', _anchor='arch_installing_openssh') }}" class="index__link">
+        Installing OpenSSH on Arch
+      </a> section.
+    </p>
+    <h2 class="help__subtitle" id="debian_installing_openssh">Installing OpenSSH on Debian based</h2>
+    <p class="help__content">
+      To install, type the commands below:
+      <ul class="help__unordered--list">
+        <li class="help__list">
+          <strong>sudo apt update</strong>
+        </li>
+        <li class="help__list">
+          <strong>sudo apt install openssh-client</strong>
+        </li>
+      </ul>
+    </p>
+    <h2 class="help__subtitle" id="centos_installing_openssh">Installing OpenSSH on CentOS</h2>
+    <p class="help__content">
+      To install, type the commands below:
+      <ul class="help__unordered--list">
+        <li class="help__list">
+          <strong>sudo dnf install openssh-client</strong>
+        </li>
+      </ul>
+    </p>
+    <h2 class="help__subtitle" id="arch_installing_openssh">Installing OpenSSH on Arch</h2>
+    <p class="help__content">
+      To install, type the commands below:
+      <ul class="help__unordered--list">
+        <li class="help__list">
+          <strong>sudo pacman -S openssh</strong>
+        </li>
+      </ul>
+    </p>
+  </article>
+</section>
+{% endblock %}

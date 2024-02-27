@@ -1,0 +1,32 @@
+{% extends "admins/layout.html" %}
+
+{% from "macros/fields_management.html" import render_text_field, render_area_field, render_datetime_field %}
+
+{% block title %}
+<title>User Management - Create Admin | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_user_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<form class="user__form" name="admin_create" method="POST" novalidate>
+  <h1 class="user__title">Create New Admin</h1>
+  <div class="form__container">
+    {{ form.hidden_tag() }}
+    {{ render_text_field(form.username) }}
+    {{ render_text_field(form.email) }}
+    {{ render_text_field(form.password) }}
+    {{ render_text_field(form.confirm_password) }}
+  </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+    {% endfor %}
+    {% endwith %}
+  <div class="button__container">
+    {{ form.submit(class_="button button--form") }}
+  </div>
+</form>
+{% endblock main_content %}

@@ -1,0 +1,51 @@
+{% from "macros/fields.html" import render_radio_field %}
+{% from "macros/level.html" import levels_list, level_port %}
+
+{% extends "players/layout.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quizzes.css') }}" />
+{% endblock head_content %}
+
+{% block title %}
+<title>Quiz 2 | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+{{ levels_list() }}
+<section class="menu__content">
+  <article class="level">
+    <h1 class="level__title">Quiz 2</h1>
+    {% if form != None %}
+      <div class="level__content">
+        <p class="content__subtitle">Answer all of the questions below.</p>
+      </div>
+      <form action="/quiz/2/" name="quiz_2" class="form" method="POST" novalidate>
+        <div class="form__content">
+          {% for main_form in form %}
+          <div class="question__content">
+            <p class="question">{{ main_form["question"] }}</p>
+            {{ main_form["choice_form"].hidden_tag() }}
+            {{ render_radio_field(main_form["choice_form"].radio) }}
+          </div>
+          {% endfor %}
+          <div class="button__flag-submit">
+            <input type="submit" value="Submit" class="button button--form" />
+          </div>
+        </div>
+      </form>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+      {% endfor %}
+      {% endwith %}
+    {% else %}
+    <div class="level__content">
+      <p class="content__subtitle">
+        Content on this level is in development. Please wait for further information.
+      </p>
+    </div>
+    {% endif %}
+  </article>
+</section>
+{% endblock main_content %}

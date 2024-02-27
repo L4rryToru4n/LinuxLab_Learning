@@ -1,0 +1,75 @@
+{% from "macros/svgs.html" import pencil, trash, check_circle, x_circle, plus_circle %}
+{% extends "admins/layout_sub.html" %}
+
+{% from "macros/fields_management.html" import render_text_field,
+  render_area_field, render_date_field, render_boolean_field %}
+
+{% block title %}
+<title>Question Management - Edit | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_question_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="management__content">
+  <form class="question__form" name="question_create" method="POST" novalidate>
+    <h1 class="question__title">{{ form.question.data }}</h1>
+    <div class="form__container">
+      {{ form.hidden_tag() }}
+      {{ render_text_field(form.quiz) }}
+      {{ render_area_field(form.question) }}
+      {{ render_text_field(form.points) }}
+      {{ render_boolean_field(form.is_active) }}
+      {{ render_date_field(form.period) }}
+    </div>
+    <div class="button__container">
+      {{ form.submit(class_="button button--form") }}
+    </div>
+  </form>
+  <h1 class="question__title">Choices</h1>
+  <a href="{{ url_for('admin.choices_create', id_question=question.id_question) }}" class="action__link--single">{{ plus_circle("plus_circle") }} Create
+    New</a>
+  {% if choices_data %}
+  <table class="table">
+    <thead class="table__head">
+      <tr class="table__head table__head--row">
+        <th class=" table__cell table__cell--header">ID</th>
+        <th class="table__cell table__cell--header">Question Choice</th>
+        <th class="table__cell table__cell--header">Correct Answer</th>
+        <th class="table__cell table__cell--header">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      {% for choice in choices_data %}
+      <tr class="table__body table__body--row">
+        <td class="table__cell table__cell--data">{{ choice.id_question_choice }}</td>
+        <td class="table__cell table__cell--data">{{ choice.question_choice }}</td>
+        {% if choice.is_correct_answer %}
+        <td class="table__cell table__cell--data">{{ check_circle("check_circle") }}</td>
+        {% else %}
+        <td class="table__cell table__cell--data">{{ x_circle("x_circle") }}</td>
+        {% endif %}
+        <td class="table__cell table__cell--data">
+          <a href="{{ url_for('admin.choices_edit', id_question=question.id_question, 
+                   id_question_choice=choice.id_question_choice) }}" class="action__link">
+                    Edit {{ pencil("pencil") }}</a>
+          <a href="{{ url_for('admin.choices_delete', id_question=question.id_question, 
+                   id_question_choice=choice.id_question_choice) }}" class="action__link">
+                     Delete {{ trash("trash") }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  {% else %}
+  <p class="table__no_data">No choices yet.</p>
+  {% endif %}
+</div>
+{% endblock main_content %}

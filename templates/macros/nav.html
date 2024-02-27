@@ -1,0 +1,43 @@
+{% macro header(email, username, role) %}
+<header class="header">
+  <div class="navbar">
+    <div class="navbar__brand">
+      <img class="navbar__logo" src="{{ url_for('static', filename='assets/logo/LinuxLab.svg') }}" alt="Linux Lab Logo" />
+    </div>
+    <nav class="navbar__navigation">
+      <div class="navbar__navigation--main">
+        <a href="{{ url_for('player.home') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.home') }}">
+          <span class="navbar__item">Home</span>
+        </a>
+        <a href="{{ url_for('player.levels_intro') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.levels_intro') }}">
+          <span class="navbar__item">Levels</span>
+        </a>
+        <a href="{{ url_for('player.scoreboard') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.scoreboard') }}">
+          <span class="navbar__item">Scoreboard</span>
+        </a>
+        <a href="{{ url_for('player.report_and_statistics') }}"
+          class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.report_and_statistics') }}">
+          <span class="navbar__item">Report & Statistics</span>
+        </a>
+        <a href="{{ url_for('player.support') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.support') }}">
+          <span class="navbar__item">Help</span>
+        </a>
+      </div>
+      <div class="navbar__navigation--profile">
+        {% if not email or role != "player" %}
+        <a href="{{ url_for('player.signin') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('player.signin') }}">
+          <span class="navbar__item">Sign In</span>
+        </a>
+        {% else %}
+        <a href="#" class="navbar__link-signed">
+          <span class="signed__item" id="profile__item">{{ username }}</span>
+        </a>
+        <a href="{{ url_for('player.signout') }}" class="navbar__link-signed">
+          <span class="signed__item">Sign Out</span>
+        </a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>
+{% endmacro %}

@@ -1,0 +1,22 @@
+{% from "macros/nav.html" import header %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block title %}
+  {% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css')}}" />
+
+  {% block head_content %} {% endblock head_content %}
+</head>
+
+<body>
+  {{ header(session.get("email"), session.get("username"), session.get("role")) }}
+  <main class="main">
+    {% block main_content %} {% endblock main_content %}
+  </main>
+</body>
+</html>

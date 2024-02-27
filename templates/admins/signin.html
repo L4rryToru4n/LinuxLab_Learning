@@ -1,0 +1,39 @@
+{% from "macros/fields.html" import render_text_field %}
+  
+{% extends "form_base.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_signin.css') }}" />
+{% endblock head_content %}
+
+{% block title %}
+<title>Sign In | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+<form name="signin" class="form" method="POST" novalidate>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  <div class="form__container">
+    <h1>Sign In</h1>
+
+    <div class="form__content">
+      {{ form.hidden_tag() }}
+      
+      {{ render_text_field(form.email) }}
+      {{ render_text_field(form.password) }}
+    </div>
+
+    <div>
+      {{ form.submit(class_="button button--form") }}
+    </div>
+
+    <span class="prev__nav">
+      <a class="prev__link" href="{{ url_for('admin.home_admin') }}">&larr; Back to home</a>
+    </span>
+  </div>
+</form>
+{% endblock main_content %}

@@ -1,0 +1,44 @@
+{% extends "admins/layout_sub.html" %}
+
+{% from "macros/fields_management.html" import render_text_field, 
+  render_area_field, render_date_field, render_boolean_field %}
+
+{% block title %}
+<title>Flag Management - Edit | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_flag_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<form class="flag__form" name="flag_edit" method="POST" novalidate>
+  <h1 class="flag__title--edit">{{ flag.level.replace("_", " - ").title() }}</h1>
+  <div class="form__container">
+    {{ form.hidden_tag() }}
+    {{ render_area_field(form.story) }}
+    {{ render_area_field(form.task) }}
+    {{ render_area_field(form.commands_needed) }}
+    {{ render_area_field(form.helpful_references) }}
+    {{ render_area_field(form.hint) }}
+    {{ render_area_field(form.access_port) }}
+    {{ render_area_field(form.flag_string) }}
+    {{ render_text_field(form.level) }}
+    {{ render_text_field(form.points) }}
+    {{ render_text_field(form.bonus_point) }}
+    {{ render_text_field(form.number_of_bonus) }}
+    {{ render_text_field(form.category) }}
+    {{ render_date_field(form.period) }}
+    {{ render_boolean_field(form.is_active) }}
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  <div class="button__container">
+    {{ form.submit(class_="button button--form") }}
+  </div>
+</form>
+
+{% endblock main_content %}

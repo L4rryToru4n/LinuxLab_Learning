@@ -1,0 +1,27 @@
+{% extends "players/layout.html" %}
+
+{% block title %}
+  <title>Home | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+<section class="home">
+  <article class="home_article">
+    <h1 class="home__title">Welcome !</h1>
+    <p class="home__content">
+      <em>LinuxLab</em> is a system developed for all people who just getting started to use
+      Linux command line and would like to learn the basics. This learning would utilize the
+      <em>Capture The Flag</em> games method and players must solve challenges through levels.
+      To begin learning, click <a href="{{ url_for('player.levels_intro') }}" class="index__link">Levels</a>.
+      If needed any help on how to connect to the remote machine, click
+      <a href="{{ url_for('player.support', _anchor='game_guide') }}" class="index__link">here</a> to read the game guide.
+    </p>
+    <p class="home__content">
+      <strong>IMPORTANT !</strong> This system requires you to have an <strong><em>SSH</em></strong> program installed.
+      If your device doesn't have it installed yet, click
+      <a href="{{ url_for('player.support') }}" class="index__link">Help</a> for
+      the installation guide.
+    </p>
+  </article>
+</section>
+{% endblock main_content %}

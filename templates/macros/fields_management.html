@@ -1,0 +1,62 @@
+{% macro render_text_field(field) %}
+<div class="form__group">
+  <div class="field__group">
+    {{ field.label(class_="form__label") }}
+    {{ field(class_="form__field field__text") }}
+  </div>
+
+  <div class="error__group">
+    {% for error in field.errors %}
+    <span class="form__error">{{ error }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_area_field(field) %}
+<div class="form__group">
+  <div class="field__group">
+    {{ field.label(class_="form__label") }}
+    {{ field(class_="form__field field__area", rows=4, style="resize: none") }}
+  </div>
+
+  <div class="error__group">
+    {% for error in field.errors %}
+    <span class="form__error">{{ error }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_date_field(field) %}
+<div class="form__group">
+  <div class="field__group">
+    {{ field.label(class_="form__label") }}
+  <div class="subfield__group">
+    {% for subfield in field %}
+      {{ subfield(class_="form__field") }}
+    {% endfor %}
+  </div>
+  </div>
+  
+  <div class="error__group">
+    {% for error in field.errors %}
+    <span class="form__error">{{ field.errors[error][0] }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_boolean_field(field) %}
+<div class="form__group">
+  <div class="field__group--boolean">
+    {{ field(class_="form__field--boolean") }}
+    {{ field.label(class_="form__label") }}
+  </div>
+  <div class="error__group">
+    {% for error in field.errors %}
+    <span class="form__error">{{ error }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}

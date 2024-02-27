@@ -1,0 +1,56 @@
+{% from "macros/svgs.html" import pencil, trash, check_circle, x_circle, plus_circle %}
+{% extends "admins/layout_sub.html" %}
+
+{% block title %}
+<title>Flag Management | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flag_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="management__content">
+  <a href="{{ url_for('admin.flag_create') }}" class="action__link--single">{{ plus_circle("plus_circle") }} Create New</a>
+  {% if flags_data %}
+  <table class="table">
+    <thead class="table__head">
+      <tr class="table__head table__head--row">
+        <th class="table__cell table__cell--header">ID</th>
+        <th class="table__cell table__cell--header">Level</th>
+        <th class="table__cell table__cell--header">Task</th>
+        <th class="table__cell table__cell--header">Points</th>
+        <th class="table__cell table__cell--header">Period</th>
+        <th class="table__cell table__cell--header">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      {% for flag in flags_data %}
+        <tr class="table__body table__body--row">
+          <td class="table__cell table__cell--data">{{ flag.id_flag }}</td>
+          <td class="table__cell table__cell--data">{{ flag.level }}</td>
+          <td class="table__cell table__cell--data">{{ flag.task }}</td>
+          <td class="table__cell table__cell--data">{{ flag.points }}</td>
+          <td class="table__cell table__cell--data">{{ flag.period }}</td>
+          <td class="table__cell table__cell--data">
+            <a href="{{ url_for('admin.flag_edit', id_flag=flag.id_flag) }}" class="action__link">Edit {{ pencil("pencil") }}</a>
+            <a href="{{ url_for('admin.flag_delete', id_flag=flag.id_flag )}}" class="action__link">Delete {{ trash("trash") }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+        <a id="reward_toggle" class="action__link--single"
+          href="{{ url_for('admin.reward_rank_achievements') }}">
+           &#127942; Reward Rank Achievements
+        </a>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  {% else %}
+  <p class="table__no_data">No flags yet.</p>
+  {% endif %}
+</div>
+{% endblock main_content %}

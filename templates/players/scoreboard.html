@@ -1,0 +1,113 @@
+{% extends "players/layout.html" %}
+
+{% block title %}
+<title>Scoreboard | Linux Lab</title>
+{% endblock title%}
+
+{% block head_content %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/scoreboard.css')}}" />
+  <script src="{{ url_for('static', filename='js/chart.js-4.4.0/dist/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/moment.js-2.29.4/moment.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/luxon.js-3.x/luxon.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chart.js-adapters/chartjs-adapter-luxon.1.3.1/chartjs-adapter-luxon.umd.js') }}"></script>
+{% endblock head_content %}
+
+{% block main_content %}
+  <section class="scoreboard">
+
+    {% if session.get("email") %}
+      <h1 class="player__total_score"> Your Score : {{ player_score }} </h1>
+    {% else %}
+      <h1 class="player__total_score"></h1>
+    {% endif %}
+    
+    <div class="scoreboard__graph">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      const data = {
+          datasets: {{ datasets_data | tojson }}
+        };
+
+        const config = {
+          type: 'line',
+          data: data,
+          options: {
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                text: 'Period - '+ {{ period | tojson }},
+                display: true
+              },
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  fontSize: 14
+                }
+              },
+            },
+            scales: {
+              x: {
+                type: 'time',
+                time: {
+                  tooltipFormat: 'DD T'
+                },
+                title: {
+                  display: true,
+                  text: 'Time earned'
+                },
+                grid: {
+                  display: false
+                },
+                ticks: {
+                  stepSize: 5
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Points'
+                },
+                grid: {
+                  display: false
+                },
+                ticks: {
+                  stepSize: 11
+                }
+              }
+            }
+          }
+        };
+
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+    </script>
+
+    {% if players %}
+    <table class="table">
+      <thead class="table__head">
+        <tr class="table__head table__head--row"">
+          <th class=" table__cell table__cell--header">Place</th>
+          <th class="table__cell table__cell--header">Name</th>
+          <th class="table__cell table__cell--header">Score</th>
+        </tr>
+      </thead>
+      <tbody class="table__body">
+        {% for player in players %}
+        <tr class="table__body table__body--row">
+          <td class="table__cell table__cell--data">{{ loop.index }}</td>
+          <td class="table__cell table__cell--data">{{ player.username }}</td>
+          <td class="table__cell table__cell--data">{{ player.total_score }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="table__no_data">No players yet.</p>
+    {% endif %}
+  </section>
+{% endblock %}
+

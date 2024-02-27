@@ -1,0 +1,35 @@
+{% extends "admins/layout_sub.html" %}
+
+{% from "macros/fields_management.html" import render_area_field, render_boolean_field %}
+
+{% block title %}
+<title>Question Management - Edit Choice | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_question_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="management__content">
+  <form class="question__form" name="question_create" method="POST" novalidate>
+    <h1 class="question__title">Edit Choice - {{ choice.id_question_choice }}</h1>
+    <div class="form__container">
+      {{ form.hidden_tag() }}
+      {{ render_area_field(form.question_choice) }}
+      {{ render_boolean_field(form.is_correct_answer) }}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+    {% endfor %}
+    {% endwith %}
+    <div class="button__container">
+      {{ form.submit(class_="button button--form") }}
+    </div>
+  </form>
+  <span class="prev__nav">
+    <a class="prev__link" href="{{ url_for('admin.question_edit', id_question=choice.question_id) }}">&larr; Back</a>
+  </span>
+</div>
+{% endblock main_content %}

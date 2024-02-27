@@ -1,0 +1,42 @@
+{% from "macros/fields.html" import render_text_field %}
+
+{% extends "form_base.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms_signup.css') }}" />
+{% endblock head_content %}
+
+{% block title %}
+<title>Sign Up  | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+<form name="signup" class="form" method="POST" novalidate>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  <div class="form__container">
+    <h1>Sign Up</h1>
+    <div class="form__content">
+      {{ form.hidden_tag() }}
+
+      {{ render_text_field(form.username) }}
+      {{ render_text_field(form.email) }}
+      {{ render_text_field(form.password) }}
+      {{ render_text_field(form.confirm_password) }}
+    </div>
+
+    <span class="form__nav">Already have an account ? Click
+      <a class="form__link" href="{{ url_for('player.signin') }}">here</a>!
+    </span>
+    <div>
+      {{ form.submit(class_="button button--form") }}
+    </div>
+    <span class="prev__nav">
+      <a class="prev__link" href="{{ url_for('player.home') }}">&larr; Back to home</a>
+    </span>
+  </div>
+</form>
+{% endblock main_content %}

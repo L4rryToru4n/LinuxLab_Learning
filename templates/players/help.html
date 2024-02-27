@@ -1,0 +1,99 @@
+{% extends "players/layout.html" %}
+
+{% block title %}
+  <title>Help | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+  <section class="support">
+    <article class="help">
+      <h1 class="help__title">SSH Installation</h1>
+      <p class="help__content">
+        All of the games that can be played here require you to type texts (command lines)
+        into the terminal / command prompt.
+      </p>
+      <p class="help__content">
+        If you already have <strong>OpenSSH</strong> installed or any similar SSH programs like <strong>PuTTY</strong>,
+        you can begin playing by clicking <a href="{{ url_for('player.levels_intro') }}" class="index__link">Levels</a>.
+        Otherwise, keep reading the guide below to install one.
+      </p>
+      <p class="help__content">
+        If your device's OS is <strong><em>Windows</em></strong> and doesn't have an SSH program installed yet,
+        then click <a href="{{ url_for('player.ssh_installation', _anchor='windows_installation') }}"
+          class="index__link">here</a>
+        to read the guide on how to install an SSH program into your device.
+      </p>
+      <p class="help__content">
+        If your device's OS is <strong><em>UNIX</em></strong> based or <strong><em>Linux</em></strong>
+        and doesn't have an SSH program installed prior to your first OS installation,
+        click <a href="{{ url_for('player.ssh_installation', _anchor='linux_installation') }}" class="index__link">here</a>
+        to read the guide on how to install an SSH program for <em>UNIX</em> based OS or <em>Linux</em>.
+        Otherwise, your device should already have an SSH program and you can begin playing by clicking
+        <a href="{{ url_for('player.levels_intro') }}" class="index__link">Levels</a>.
+      </p>
+    </article>
+    
+    <article class="help">
+      <h1 class="help__title" id="game_guide">Game Guide</h1>
+      <h2 class="help__subtitle">Using Terminal / Command Prompt</h2>
+      <p class="help__content">
+        To connect to the selected level's terminal, simply connect via SSH protocol using either your
+        computer's terminal (Unix/Linux based OS) or command prompt (Windows based OS) and enter the
+        destination address, the port and the password.
+      </p>
+      <p class="help__content">
+        For example, <strong>ssh linuxlab0@linuxlab.id -p 22</strong> then enter the password to login.
+      </p>
+
+      <h2 class="help__subtitle">Using PuTTY</h2>
+      <p class="help__content">
+        On the start of the program, input the hostname destination on the "Host Name (or IP address)" 
+        and port number on the "Port" input box. After inputting the hostname destination and port, click
+        "Open" to open a connection to the remote machine
+        <img src="{{ url_for('static', filename='assets/putty_usage/putty_configuration.png') }}" 
+        alt="putty_configuration_window" class="image__content">
+      </p>
+      <p class="help__content">
+        Next, there will be a separate terminal window. On this window enter the username for the
+        current level that you wish to access. For example. <strong>linuxlab0</strong>, then press
+        Enter.
+        <img src="{{ url_for('static', filename='assets/putty_usage/putty_terminal.png') }}"
+          alt="putty_terminal_window_entering_username" class="image__content">
+      </p>
+      <p class="help__content">
+        The remote machine will ask for the username's password. Enter the password for the subsequent
+        level.
+        <img src="{{ url_for('static', filename='assets/putty_usage/putty_terminal_password.png') }}"
+          alt="putty_terminal_window_entering_password" class="image__content">
+      </p>
+      <p class="help__content">
+        If successfull, the terminal screen should print the welcome screen of the remote machine.
+        <img src="{{ url_for('static', filename='assets/putty_usage/putty_terminal_successfull.png') }}"
+          alt="putty_terminal_window_sucessfull_access" class="image__content">
+      </p>
+    </article>
+    
+    <article class="help">
+      <h1 class="help__title">Support</h1>
+      <p class="help__content">
+        If further support is needed, contact gamemaster@linuxlab.id by following the writting
+        guide below :
+      </p>
+      <p class="help__content">
+        For the subjects, use one of these below :
+          <ul>
+            <li class="help__list">Cannot submit any or a level's flag</li>
+            <li class="help__list">Cannot connect to any or a level</li>
+            <li class="help__list">Other problems</li>
+          </ul>
+      </p>
+      <p class="help__content">
+        As for the body, you can type your problems in a informal way but please state them in
+        a respectful manner. Lastly, don't try to blackmail, dox or send non-related stuffs
+      </p>
+      <p class="help__content">
+        Requests should be replied during weekdays (your timezone however might be different,
+        consider checking your time when sending your emails).</p>
+    </article>
+  </section>
+{% endblock %}

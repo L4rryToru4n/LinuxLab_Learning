@@ -1,0 +1,59 @@
+{% from "macros/svgs.html" import pencil, trash, check_circle, x_circle, plus_circle %}
+{% extends "admins/layout_sub.html" %}
+
+{% block title %}
+<title>Question Management | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_management.css') }}" />
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="management__content">
+  <a href="{{ url_for('admin.question_create')}}" class="action__link--single">{{ plus_circle("plus_circle") }} Create
+    New</a>
+  {% if questions_data %}
+  <table class="table">
+    <thead class="table__head">
+      <tr class="table__head table__head--row">
+        <th class=" table__cell table__cell--header">ID</th>
+        <th class="table__cell table__cell--header">Quiz</th>
+        <th class="table__cell table__cell--header">Question</th>
+        <th class="table__cell table__cell--header">Points</th>
+        <th class="table__cell table__cell--header">Active ?</th>
+        <th class="table__cell table__cell--header">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      {% for question in questions_data %}
+      <tr class="table__body table__body--row">
+        <td class="table__cell table__cell--data">{{ question.id_question }}</td>
+        <td class="table__cell table__cell--data">{{ question.quiz }}</td>
+        <td class="table__cell table__cell--data">{{ question.question }}</td>
+        <td class="table__cell table__cell--data">{{ question.points }}</td>
+        {% if question.is_active %}
+        <td class="table__cell table__cell--data">{{ check_circle("check_circle") }}</td>
+        {% else %}
+        <td class="table__cell table__cell--data">{{ x_circle("x_circle") }}</td>
+        {% endif %}
+        <td class="table__cell table__cell--data">
+          <a href="{{ url_for('admin.question_edit', id_question=question.id_question) }}" class="action__link">Edit {{ pencil("pencil")
+            }}</a>
+          <a href="{{ url_for('admin.question_delete', id_question=question.id_question) }}" class="action__link">Delete {{
+            trash("trash") }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+  <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+  {% endfor %}
+  {% endwith %}
+  {% else %}
+  <p class="table__no_data">No questions yet.</p>
+  {% endif %}
+</div>
+{% endblock main_content %}

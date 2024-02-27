@@ -1,0 +1,61 @@
+{% macro render_text_field(field) %}
+<div class="form__group">
+  {{ field.label(class_="form__label") }}
+  {{ field(class_="form__field field__text") }}
+
+  {% for error in field.errors %}
+  <span class="form__error">{{ error }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_flag_field(field) %}
+<div class="form__group">
+  {{ field.label(class_="form__label") }}
+  {{ field(class_="form__field") }}
+  
+  {% for error in field.errors %}
+  <span class="form__error">{{ error }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_area_field(field) %}
+<div class="form__group">
+  {{ field.label(class_="form__label") }}
+  {{ field(class_="form__field field__area", rows=4, style="resize: none") }}
+
+  {% for error in field.errors %}
+  <span class="form__error">{{ error }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_datetime_field(field) %}
+<div class="form__group">
+  {{ field.label(class_="form__label") }}
+  {{ field(class_="form__field") }}
+
+  {% for error in field.errors %}
+  <span class="form__error">{{ error }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+
+{% macro render_radio_field(field) %}
+<div class="form__group">
+  <ul class="form__field">
+  {% for subfield in field %}
+      <li class="field__radio">
+        {{ subfield(class_="radio__button") }} 
+        {{ subfield.label(class_="field__radio--label") }}
+      </li>
+  {% endfor %}
+  </ul>
+  
+  {% for error in field.errors %}
+  <span class="form__error">{{ error }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}

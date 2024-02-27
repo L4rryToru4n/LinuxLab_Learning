@@ -1,0 +1,51 @@
+{% from "macros/fields.html" import render_flag_field %}
+{% from "macros/level.html" import levels_list %}
+
+{% extends "players/layout.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/levels.css') }}" />
+{% endblock head_content %}
+
+{% block title %}
+<title>Level - Main | Linux Lab</title>
+{% endblock %}
+
+{% block main_content %}
+{{ levels_list() }}
+<section class="menu__content">
+  <article class="level">
+      <h1 class="level__title"> Welcome !</h1>
+      <div class="level__content">
+        {% if player_username %}
+        <p class="content__subtitle">
+          Greetings ! You must be <strong>{{ player_username }}</strong>. I'm Professor Zachary, the Laboratory Head of LinuxLab.
+        </p>
+        {% else %}
+        <p class="content__subtitle">
+          Greetings ! You must be the new <strong>guest</strong>. I'm Zachary, the Laboratory Head of LinuxLab.
+        </p>
+        {% endif %}
+        <p class="content__subtitle">
+          I've just informed that you're now my lab assistant. 
+          We're going to solve many problems in this lab and possibly find a new formula.
+        </p>
+        <p class="content__subtitle">
+          What we're going to solve you asked ? Of course, it's The Linux Problem ! There are a lot of commands that we would like to test and play around with. I'm
+          pretty sure you are going to be excited !
+        </p>
+        <p class="content__subtitle">
+          However, before you're going to jump inside, take a look around the lab first. There're some pages
+          that could help you getting started or even help you if something is out of your control ('Help' section). Anyway, I'll
+          be waiting inside (Level Entry) . See you there !
+        </p>
+      <div class="level__content">
+        <p class="content__title"><em>Task</em></p>
+        <p class="content__subtitle">
+          Select <strong>Level Entry</strong> on the left of the levels list to begin playing
+        </p>
+      </div>
+    </div>
+  </article>
+</section>
+{% endblock main_content %}

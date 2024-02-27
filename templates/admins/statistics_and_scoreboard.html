@@ -1,0 +1,206 @@
+{% from "macros/fields.html" import render_text_field %}
+
+{% extends "admins/layout.html" %}
+
+{% block title %}
+<title>Statistics and Scoreboard | Linux Lab</title>
+{% endblock %}
+
+{% block head_content %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics_and_scoreboard.css') }}" />
+  <script src="{{ url_for('static', filename='js/chart.js-4.4.0/dist/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/moment.js-2.29.4/moment.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/luxon.js-3.x/luxon.js') }}"></script>
+  <script
+    src="{{ url_for('static', filename='js/chart.js-adapters/chartjs-adapter-luxon.1.3.1/chartjs-adapter-luxon.umd.js') }}"></script>
+{% endblock head_content %}
+
+{% block main_content %}
+<div class="statistics_and_scoreboard__content">
+  <section class="statistics">
+    <h1 class="statistics__title">Statistics</h1>
+    <div class="statistics__all_time">
+      <h2 class="statistics__subtitle">All Time Statistics</h2>
+      <article class="all_time__content">
+        <label class="all_time_label__content">Total players registered : {{ total_players }}</label>
+        {% if all_time_highest %}
+        <label class="all_time_label__content">All time highest score : {{ all_time_highest["score"] }}, by {{
+          all_time_highest["username"] }}</label>
+        {% else %}
+        <label class="all_time_label__content">All time highest score : No records yet.</label>
+        {% endif %}
+      </article>
+    </div>
+    <div class="statistics__periodic">
+      <h2 class="statistics__subtitle">Periodic Statistics</h2>
+      {% if form.period.choices != None %}
+        <form name="statistics_admin" class="form" method="POST" novalidate>
+          <div class="form__content">
+            {{ form.hidden_tag() }}
+
+            {{ render_text_field(form.period) }}
+            <div class="button__apply-period">
+              {{ form.submit(class_="button button--form") }}
+            </div>
+          </div>
+        </form>
+      {% endif %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <span class="form__flash form__flash--{{ category }}">{{ message }}</span>
+      {% endfor %}
+      {% endwith %}
+      <article class="periodic__content">
+        <div class="components__content">
+          <div class="component__table">
+            <label class="component_label__content">Number of levels solved</label>
+            {% if levels_solved %}
+            <table class="table">
+              <tbody class="table__body">
+                {% for level in levels_solved %}
+                <tr class="table__body table__body--row">
+                  <td class="table__cell table__cell--data">{{ level.level }}</td>
+                  <td class="table__cell table__cell--data">{{ level.total_submission }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <p class="component_warn__content">No records yet.</p>
+            {% endif %}
+
+            <label class="component_label__content">Quizzes Answered</label>
+            {% if quizzes_answered %}
+            <table class="table">
+              <thead class="table__head">
+                <tr class="table__head 
+                table__head--row_quizzes_answered">
+                  <th class=" table__cell table__cell--header">Quiz</th>
+                  <th class="table__cell table__cell--header">Question</th>
+                  <th class="table__cell table__cell--header">Answers Correct</th>
+                  <th class="table__cell table__cell--header">Answers Incorrect</th>
+                </tr>
+              </thead>
+              <tbody class="table__body_quizzes_answered">
+                {% for quiz in quizzes_answered %}
+                <tr class="table__body_quizzes_answered 
+                table__body--row_quizzes_answered">
+                  <td class="table__cell table__cell--data">{{ quiz.quiz }}</td>
+                  <td class="table__cell table__cell--data">{{ quiz.question }}</td>
+                  <td class="table__cell table__cell--data">{{ quiz.answers_correct }}</td>
+                  <td class="table__cell table__cell--data">{{ quiz.answers_incorrect }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <p class="component_warn__content">No records yet.</p>
+            {% endif %}
+          </div>
+          <!-- <label class="component_label__content">Submissions :</label>
+          <label class="component_label__content">Hints used :</label> -->
+        </div>
+        <div class="labels__content">
+          <div class="average_time__content">
+            <label class="average_label__content">Average level completion time : {{ avg_completion }}</label>
+            <label class="average_label__content">Average playing time          : {{ avg_playing }}</label>
+          </div>
+          <div class="points__content">
+            <label class="points_label__content">Total possible points : {{ total_points }}</label>
+            <label class="points_label__content">Highest score         : {{ periodic_highest["score"] }}, by {{ periodic_highest["username"] }}</label>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="scoreboard">
+    <div class="scoreboard__graph">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      const data = {
+        datasets: {{ datasets_data | tojson }}
+          };
+
+      const config = {
+        type: 'line',
+        data: data,
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              text: 'Period - ' + {{ period | tojson }},
+      display: true
+                },
+      legend: {
+        display: true,
+          position: "bottom",
+            labels: {
+          fontSize: 14
+        }
+      },
+              },
+      scales: {
+        x: {
+          type: 'time',
+            time: {
+            tooltipFormat: 'DD T'
+          },
+          title: {
+            display: true,
+              text: 'Time earned'
+          },
+          grid: {
+            display: false
+          },
+          ticks: {
+            stepSize: 12
+          }
+        },
+        y: {
+          title: {
+            display: true,
+              text: 'Points'
+          },
+          grid: {
+            display: false
+          },
+          ticks: {
+            stepSize: 10
+          }
+        }
+      }
+            }
+          };
+
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    </script>
+  
+    {% if players %}
+    <table class="table">
+      <thead class="table__head">
+        <tr class="table__head table__head--row">
+            <th class=" table__cell table__cell--header">Place</th>
+          <th class="table__cell table__cell--header">Name</th>
+          <th class="table__cell table__cell--header">Score</th>
+        </tr>
+      </thead>
+      <tbody class="table__body">
+        {% for player in players %}
+        <tr class="table__body table__body--row">
+          <td class="table__cell table__cell--data">{{ loop.index }}</td>
+          <td class="table__cell table__cell--data">{{ player.username }}</td>
+          <td class="table__cell table__cell--data">{{ player.total_score }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="scoreboard_table__no_data">No players yet.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock main_content %}

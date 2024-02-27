@@ -1,0 +1,48 @@
+{% macro header(email, username, role) %}
+<header class="header">
+  <div class="navbar">
+    <div class="navbar__brand">
+      <img class="navbar__logo" src="{{ url_for('static', filename='assets/logo/LinuxLab.svg') }}" alt="Linux Lab Logo" />
+    </div>
+    <nav class="navbar__navigation">
+      {%if not email or role != "administrator" %}
+      <div class="navbar__navigation--main">
+        <a href="{{ url_for('admin.home_admin') }}"
+          class="navbar__link {{ 'navbar__link--active' if request.path == url_for('admin.home_admin') }}">
+          <span class="navbar__item">Home</span>
+        </a>
+      </div>
+      <div class="navbar__navigation--profile">
+        <a href="{{ url_for('admin.signin_admin') }}" class="navbar__link navbar__link--unsigned">
+          <span class="navbar__item">Sign In</span>
+        </a>
+      </div>
+      {% else %}
+      <div class="navbar__navigation--main">
+        <a href="{{ url_for('admin.home_admin') }}"
+          class="navbar__link {{ 'navbar__link--active' if request.path == url_for('admin.home_admin') }}">
+          <span class="navbar__item">Home</span>
+        </a>
+        <a href="{{ url_for('admin.statistics_and_scoreboard_admin') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('admin.statistics_and_scoreboard_admin') }}">
+          <span class="navbar__item">Statistics & Scoreboard</span>
+        </a>
+        <a href="{{ url_for('admin.game_management') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('admin.flag_management') }}">
+          <span class="navbar__item">Game Management</span>
+        </a>
+        <a href="{{ url_for('admin.user_management') }}" class="navbar__link {{ 'navbar__link--active' if request.path == url_for('admin.user_management') }}">
+          <span class="navbar__item">User Management</span>
+        </a>
+      </div>
+      <div class="navbar__navigation--profile">
+        <a href="#" class="navbar__link-signed">
+          <span class="signed__item" id="profile__item">{{ username }}</span>
+        </a>
+        <a href="{{ url_for('admin.signout_admin') }}" class="navbar__link-signed">
+          <span class="signed__item">Sign Out</span>
+        </a>
+      </div>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+{% endmacro %}
