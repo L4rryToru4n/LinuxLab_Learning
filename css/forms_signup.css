@@ -1,0 +1,112 @@
+.form {
+  width: 20em;
+  height: 45em;
+  margin: 0 auto;
+  background-color: #fdfdfd;
+  box-shadow: 0rem 0.2rem 0px 0.05rem rgb(50, 50, 50, 0.25);
+  border-radius: 2px;
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 2em 0em 2em;
+}
+
+.form__content {
+  width: 100%;
+  margin-top: 3em;
+}
+
+.form__error {
+  margin-top: 0.3rem;
+}
+
+.form__error,
+.form__flash {
+  display: block;
+  padding: 0.5rem 0.3rem 0.3rem 0.3rem;
+}
+
+.form__error,
+.form__flash--danger {
+  color: crimson;
+}
+
+.form__flash {
+  margin: 0.3rem;
+}
+
+.form__flash--success {
+  color: yellowgreen;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.form__label {
+  font-weight: 400;
+  padding-left: 0.5em;
+}
+
+.form__field {
+  height: 1.6rem;
+  font-size: 1em;
+  padding: 0 0.4em;
+  outline: none;
+  border: thin solid rgb(50, 50, 50, 0.25);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 2px rgb(50, 50, 50, 0.25);
+}
+
+.form__field:focus {
+  border: thin solid rgb(50, 50, 50, 0.60);
+}
+
+.button--form {
+  margin-bottom: 1em;
+  padding: 0.1em 0.9em;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+.button--form:hover {
+  background-color: var(--background-color-hover);
+  transition: 0.1s all linear;
+}
+
+.form__nav {
+  margin: 0 auto;
+}
+
+.form__link {
+  color: #000;
+}
+
+.form__link:hover {
+  color: orange;
+  transition: 0.1s all linear;
+}
+
+.prev__nav {
+  display: flex;
+  align-self: first baseline;
+  margin-top: 2em;
+}
+
+.prev__link {
+  color: #000;
+}
+
+.prev__link:hover {
+  color: orange;
+  transition: 0.1s all linear;
+}

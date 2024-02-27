@@ -1,0 +1,59 @@
+.button {
+  --background-color: #265999;
+  --background-color-hover: #d5ad36;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  background-color: #265999;
+}
+
+@media screen and (min-width: 25em) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 50em) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 75em) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 100em) {
+  html {
+    font-size: 24px;
+  }
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  margin: 0 auto;
+  max-width: 15rem;
+}
+
+.header__brand {
+  margin: 0 auto;
+  padding: 2.25rem 0;
+}
+
+.header__logo {
+  align-self: center;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 0.5em 5em;
+}
