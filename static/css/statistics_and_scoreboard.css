@@ -1,0 +1,330 @@
+.statistics_and_scoreboard__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.statistics {
+  margin-left: 2em;
+  margin-right: auto;
+  font-size: 1.5rem;
+}
+
+.statistics__title {
+  font-size: 2.75rem;
+}
+
+.statistics__subtitle {
+  font-size: 1.75rem;
+}
+
+.statistics__all_time {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+}
+
+.all_time__content {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5em;
+}
+
+.all_time_label__content{
+  margin-right: 5em;
+}
+
+.statistics__periodic {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+}
+
+.periodic__content {
+  margin-top: 0.5em;
+}
+
+.components__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1em auto;
+}
+
+.component__table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.component_warn__content{
+  align-self: center;
+  margin: 1em 0 1em 0;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.component_label__content {
+  align-self: center;
+  margin: 2em 0 1em 2em;
+  font-weight: 600;
+}
+
+.labels__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.average_time__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-right: 3em;
+}
+
+.average_label__content {
+  margin-top: 1em;
+  margin-right: 3em;
+}
+
+.points__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.points_label__content {
+  margin-top: 1em;
+}
+
+.form {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.form__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.form__error {
+  margin: 0.1rem;
+}
+
+.form__error,
+.form__flash {
+  display: flex;
+  padding: 0.5rem 0.3rem 0.3rem 0.3rem;
+}
+
+.form__error,
+.form__flash--danger {
+  color: crimson;
+}
+
+.form__flash {
+  margin: 0.3rem;
+}
+
+.form__flash--success {
+  color: yellowgreen;
+}
+
+.form__flash--info {
+  color: skyblue;
+}
+
+.form__group {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+.form__label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.form__field {
+  height: 2rem;
+  font-size: 18px;
+  padding: 0 10px;
+  margin-right: 10px;
+  outline: none;
+  border: thin solid rgb(50, 50, 50, 0.25);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 2px rgb(50, 50, 50, 0.25);
+}
+
+.form__field:focus {
+  border: thin solid rgb(50, 50, 50, 0.6);
+}
+
+.button__apply-period {
+  display: block;
+  align-self: auto;
+}
+
+.button--form {
+  background-color: var(--background-color);
+  border: #4488bf;
+  font-size: 1.15rem;
+  font-weight: normal;
+  padding: 0.1rem 1rem;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 1px 2px rgb(50, 50, 50, 0.25);
+}
+
+.button--form:hover {
+  background-color: var(--background-color-hover);
+}
+
+.statistics .table {
+  margin-top: 1rem;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #dbdbdb;
+  border-spacing: 0;
+  background-color: white;
+  box-shadow: 1px 2px 2px rgb(100, 100, 100, 0.10);
+}
+
+.statistics .table__head--row_quizzes_answered {
+  min-width: 20rem;
+  max-width: 100rem;
+  display: grid;
+  grid-template-columns: 15% 45% 20% 20%;
+  background-color: #f5f5f5;
+}
+
+.statistics .table__body {
+  display: block;
+  height: 100%;
+  width: 100%;
+  max-height: 20rem;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.statistics .table__body_quizzes_answered {
+  display: block;
+  height: 100%;
+  max-height: 25rem;
+  min-width: 20rem;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.statistics .table__cell {
+  padding: 0.1rem;
+}
+
+.statistics .table__body .table__body--row {
+  height: 3.75rem;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  border-top: 1px solid #d9d9d9;
+}
+
+.statistics .table__body_quizzes_answered 
+.table__body--row_quizzes_answered {
+  display: grid;
+  grid-template-columns: 15% 45% 20% 20%;
+  border-top: 1px solid #d9d9d9;
+  grid-auto-rows: max-content;
+}
+
+.statistics .table__body--row:nth-child(even) {
+  background-color: #dbdbdb;
+}
+
+.statistics 
+.table__body--row_quizzes_answered:nth-child(even) {
+  background-color: #dbdbdb;
+}
+
+.statistics .table__cell--data {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.scoreboard__graph {
+  display: flex;
+  height: 20em;
+  width: 50em;
+  margin: 1em auto 3em auto;
+}
+
+.player__total_score {
+  display: flex;
+  font-size: 2rem;
+  margin: 1.25em auto;
+}
+
+.scoreboard .table {
+  margin-top: 1rem;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #dbdbdb;
+  border-spacing: 0;
+  background-color: white;
+  box-shadow: 1px 2px 2px rgb(100, 100, 100, 0.10);
+}
+
+.scoreboard .table__body {
+  display: block;
+  height: 100%;
+  max-height: 30rem;
+  min-width: 50rem;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.scoreboard .table__head--row {
+  min-width: 50rem;
+  display: grid;
+  grid-template-columns: 10% 60% 30%;
+  background-color: #f5f5f5;
+}
+
+.scoreboard .table__cell {
+  padding: 0.1rem;
+}
+
+.scoreboard .table__cell--header {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.scoreboard .table__body .table__body--row {
+  height: 3.75rem;
+  display: grid;
+  grid-template-columns: 10% 60% 30%;
+  border-top: 1px solid #d9d9d9;
+}
+
+.scoreboard .table__body--row:nth-child(even) {
+  background-color: #dbdbdb;
+}
+
+.scoreboard .table__cell--data {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreboard_table__no_data {
+  margin: 7.5rem 0 7.5rem 0;
+  align-self: center;
+}
